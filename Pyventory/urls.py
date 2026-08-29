@@ -18,15 +18,19 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from accounts import views as accounts_views
+from inventory import views as inventory_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Auth routes
-    path('register/', accounts_views.register, name='register'),
+    path('account/register/', accounts_views.register_account, name='register_account'),
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     
     # Main route (Home)
-    path('', accounts_views.home, name='home'),
+    path('', inventory_views.inventory, name='inventory'),
+
+    # Inventory routes
+    path('product/register/', inventory_views.register_product, name='register_product'),
 ]

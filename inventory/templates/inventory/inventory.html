@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyventory | {{ request.user.username }}'s Estoque</title>
+    <style>
+        /* TEMA MATRIX/TERMINAL */
+        body {
+            background-color: #0c0c0c;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+        }
+        h1, h2 { border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
+        a { color: #00ff00; text-decoration: none; font-weight: bold; }
+        a:hover { background-color: #00ff00; color: #0c0c0c; }
+        
+        /* ESTILO DA TABELA */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #005500; padding: 12px; text-align: left; }
+        th { background-color: #002200; }
+        
+        /* ALERTA DE ESTOQUE BAIXO */
+        .alert { color: #ff3333; font-weight: bold; }
+        
+        /* BOTÕES */
+        .btn { border: 1px solid #00ff00; padding: 8px 15px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>> Pyventory_Inventory_System</h1>
+        <h1>> BEM_VINDO(A), {{ request.user.username }}!</h1>
+        <p>> SALDO_ATUAL: R$ {{ request.user.balance }}</p>
+    
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" style="background: none; color: #ff3333; border: 1px solid #ff3333; padding: 10px; cursor: pointer;">> ENCERRAR_SESSÃO</button>
+        </form>
+        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <a href="{% url 'register_product' %}" class="btn"> [ + ] CADASTRAR NOVO PRODUTO </a>
+        </div>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Nome</th>
+                    <th>Qtd</th>
+                    <th>Preço (R$)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- O loop do Django para varrer a lista que veio da View -->
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.sku }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.amount }}</td>
+                    <td>{{ product.unitary_price }}</td>
+                    
+                    <!-- Lógica no HTML usando a property do model! -->
+                    <td>
+                        {% if product.is_low_stock %}
+                            <span class="alert">[ ESTOQUE BAIXO ]</span>
+                        {% else %}
+                            <span>[ OK ]</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                
+                <!-- Caso a lista esteja vazia -->
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">NENHUM PRODUTO LOCALIZADO NO BANCO DE DADOS.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+</body>
+</html>

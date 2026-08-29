@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyventory | Cadastrar Produto</title>
+    <style>
+        /* TEMA MATRIX/TERMINAL */
+        body {
+            background-color: #0c0c0c;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+        }
+        h1 { border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
+        a { color: #00ff00; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+        a:hover { background-color: #00ff00; color: #0c0c0c; }
+        
+        /* ESTILIZAÇÃO DO FORMULÁRIO E INPUTS */
+        form { max-width: 600px; }
+        p { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        
+        input, textarea { 
+            width: 100%; 
+            background-color: #001100; /* Fundo verde bem escuro */
+            color: #00ff00; 
+            border: 1px solid #005500; 
+            padding: 10px; 
+            font-family: 'Courier New', Courier, monospace;
+            box-sizing: border-box; /* Garante que o padding não quebre a largura */
+        }
+        
+        /* Efeito quando o usuário clica no campo */
+        input:focus, textarea:focus { outline: none; border: 1px solid #00ff00; background-color: #000000; }
+        
+        /* BOTÃO DE SUBMIT */
+        .btn { 
+            background: none;
+            color: #00ff00;
+            border: 1px solid #00ff00; 
+            padding: 10px 20px; 
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .btn:hover { background-color: #00ff00; color: #0c0c0c; }
+        
+        /* Mensagens de erro do Django */
+        .errorlist { color: #ff3333; list-style-type: none; padding: 0; margin-top: 5px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1> CADASTRAR_NOVO_PRODUTO</h1>
+        <a href="{% url 'inventory' %}"> [ <- ] VOLTAR PARA INVENTÁRIO </a>
+    </header>
+
+    <main>
+        <!-- method="POST" é obrigatório para enviar dados -->
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- O Django desenha os inputs e o CSS acima cuida das cores -->
+            {{ form.as_p }}
+            
+            <button type="submit" class="btn">> SALVAR_NO_BANCO_DE_DADOS</button>
+        </form>
+    </main>
+
+</body>
+</html>
