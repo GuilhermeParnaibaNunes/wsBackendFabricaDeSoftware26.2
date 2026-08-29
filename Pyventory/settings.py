@@ -83,6 +83,12 @@ DATABASES = {
 # Forces django to use User model 
 AUTH_USER_MODEL = 'accounts.User'
 
+# Forces django to use desired auth logic
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
 
