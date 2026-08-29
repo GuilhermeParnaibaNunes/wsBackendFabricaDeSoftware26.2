@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyventory | Login</title>
+    <style>
+        body { background-color: #0c0c0c; color: #00ff00; font-family: 'Courier New', Courier, monospace; padding: 50px; text-align: center; }
+        .login-box { border: 1px solid #00ff00; padding: 30px; display: inline-block; text-align: left; background-color: #001100; }
+        input { background-color: #000000; color: #00ff00; border: 1px solid #005500; padding: 10px; font-family: inherit; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
+        .btn { background: none; color: #00ff00; border: 1px solid #00ff00; padding: 10px 20px; font-family: inherit; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn:hover { background-color: #00ff00; color: #0c0c0c; }
+        .error { color: #ff3333; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>> ACESSO_RESTRITO</h2>
+        
+        {% if form.errors %}
+            <div class="error">> ERRO: Credenciais inválidas. Tente novamente.</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">> INICIAR_SESSÃO</button>
+        </form>
+    </div>
+</body>
+</html>

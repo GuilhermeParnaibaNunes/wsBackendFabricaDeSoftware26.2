@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyventory | Home</title>
+    <style>body { background-color: #0c0c0c; color: #00ff00; font-family: 'Courier New', Courier, monospace; padding: 50px; }</style>
+</head>
+<body>
+    <h1>> BEM_VINDO(A), {{ request.user.username }}!</h1>
+    <p>> SALDO_ATUAL: R$ {{ request.user.balance }}</p>
+    
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" style="background: none; color: #ff3333; border: 1px solid #ff3333; padding: 10px; cursor: pointer;">> ENCERRAR_SESSÃO</button>
+    </form>
+</body>
+</html>
