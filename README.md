@@ -50,7 +50,7 @@ cd wsBackendFabricaDeSoftware26.2
 
 **2. Configure as Variáveis de Ambiente (.env):**
 Crie um arquivo chamado `.env` na raiz do projeto (no mesmo nível do arquivo `manage.py`) e insira as credenciais do banco:
-*(Dica: Para gerar uma SECRET_KEY segura, execute `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"` no seu terminal e cole o resultado no arquivo).*
+*(Dica: Para gerar uma SECRET_KEY segura via terminal, execute `python -c "import secrets; print(secrets.token_urlsafe(50))"` e cole o resultado no arquivo).*
 ```env
 SECRET_KEY='cole-a-chave-gerada-aqui'
 DEBUG=True
