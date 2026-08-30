@@ -35,4 +35,5 @@ urlpatterns = [
     path('product/register/', inventory_views.register_product, name='register_product'),
     path('product/detail/<str:sku>/', inventory_views.product_detail, name='product_detail'),
     path('product/update/<str:sku>/', inventory_views.product_update, name='product_update'),
+    path('product/delete/<str:sku>/', inventory_views.product_delete, name='product_delete'),
 ]

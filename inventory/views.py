@@ -44,3 +44,13 @@ def product_update(request, sku):
         form = ProductForm(instance=product)
             
     return render(request, 'inventory/update.html', {'form': form, 'product': product})
+
+@login_required
+def product_delete(request, sku):
+    product = get_object_or_404(Product, sku=sku, store=request.user)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('inventory')
+
+    return render(request, 'inventory/delete.html', {'product': product})

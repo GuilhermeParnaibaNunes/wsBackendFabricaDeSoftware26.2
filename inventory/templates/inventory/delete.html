@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyventory | Excluir</title>
+    <style>
+        body { background-color: #0c0c0c; color: #00ff00; font-family: 'Courier New', Courier, monospace; padding: 20px; }
+        
+        /* Tema de Alerta Vermelho */
+        h1 { border-bottom: 1px solid #ff3333; color: #ff3333; padding-bottom: 10px; }
+        .warning-box { border: 1px solid #ff3333; background-color: #220000; padding: 20px; max-width: 600px; margin-top: 20px; }
+        .warning-text { color: #ff3333; font-weight: bold; font-size: 1.2em; margin-bottom: 20px; }
+        
+        /* Botão Destrutivo */
+        .btn-danger { background: none; color: #ff3333; border: 1px solid #ff3333; padding: 10px 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold; cursor: pointer; margin-right: 10px; }
+        .btn-danger:hover { background-color: #ff3333; color: #0c0c0c; }
+        
+        /* Botão Seguro */
+        .btn-safe { background: none; color: #00ff00; border: 1px solid #00ff00; padding: 10px 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-safe:hover { background-color: #00ff00; color: #0c0c0c; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1> AVISO_DE_EXCLUSAO</h1>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <p class="warning-text">TEM CERTEZA QUE DESEJA PURGAR O REGISTRO [{{ product.name }}] (SKU: {{ product.sku }})?</p>
+            <p style="color: #ff9999;">Esta ação é irreversível e o item será apagado permanentemente do banco de dados.</p>
+            
+            <form method="POST" style="margin-top: 30px;">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger"> SIM_DELETAR_ARQUIVO</button>
+                <a href="{% url 'product_detail' product.sku %}" class="btn-safe"> ABORTAR </a>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>
