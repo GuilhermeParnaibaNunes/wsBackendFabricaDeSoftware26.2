@@ -28,23 +28,64 @@
 
         #search-btn { border: 1px solid #00ff00; padding: 8px 15px; display: inline-block; border-color: #00ffff; color: #00ffff; }
         #search-btn:hover { background-color: #00ffff; color: #0c0c0c; }
+
+        /* CONTAINER DO CABEÇALHO (FLEXBOX) */
+        .user-panel {
+            display: flex;
+            justify-content: space-between; /* Empurra o botão de logout para a direita */
+            align-items: center; /* Alinha os itens verticalmente ao centro */
+            border-bottom: 1px dashed #00ff00; /* Linha pontilhada estilo terminal */
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* AGRUPAMENTO DA SAUDAÇÃO E SALDO */
+        .user-info {
+            display: flex;
+            gap: 40px; /* Espaço entre o Nome e o Saldo */
+            align-items: center;
+        }
+
+        .user-info h2, .user-info p {
+            margin: 0; /* Remove margens nativas para alinhamento perfeito */
+            font-size: 1.1em;
+        }
+
+        /* BOTÃO DE LOGOUT ESPECÍFICO */
+        .btn-logout {
+            color: #ff3333;
+            border: 1px solid #ff3333;
+            padding: 8px 15px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-logout:hover {
+            background-color: #ff3333;
+            color: #0c0c0c;
+        }
     </style>
 </head>
 <body>
 
     <header>
         <h1>> Pyventory_Inventory_System</h1>
-        <h2>> BEM_VINDO(A), {{ request.user.username }}!</h2>
-        <p>> SALDO_ATUAL: R$ {{ request.user.balance }}</p>
-    
+        <div class="user-panel">
+        <div class="user-info">
+            <h2 style="border: none; padding-bottom: 0;">> BEM_VINDO(A), {{ user.username }}!</h2>
+            <p>> SALDO_ATUAL: R$ {{ user.balance }}</p>
+        </div>
+        
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" style="background: none; color: #ff3333; border: 1px solid #ff3333; padding: 10px; cursor: pointer;">> ENCERRAR_SESSÃO</button>
+            <button class="btn-logout" type="submit" style="background: none; color: #ff3333; border: 1px solid #ff3333; padding: 10px; cursor: pointer;">> ENCERRAR_SESSÃO</button>
         </form>
+    </div>
+    
         <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-            <a href="{% url 'register_product' %}" class="btn"> [ + ] CADASTRAR NOVO PRODUTO </a>
-            <a href="{% url 'import_product' %}" class="btn" id="search-btn"> [ ⬇ ] IMPORTAR VIA API </a>
-            <a href="{% url 'sell_product' %}" class="btn"> [ $ ] REGISTRAR VENDA </a>
+            <a href="{% url 'register_product' %}" class="btn"> [ + ] CADASTRAR_NOVO_PRODUTO </a>
+            <a href="{% url 'import_product' %}" class="btn" id="search-btn"> [ ⬇ ] IMPORTAR_VIA_API </a>
+            <a href="{% url 'sell_product' %}" class="btn"> [ $ ] REGISTRAR_VENDA </a>
         </div>
     </header>
 
