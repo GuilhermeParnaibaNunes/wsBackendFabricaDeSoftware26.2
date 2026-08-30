@@ -17,7 +17,7 @@ class ProductForm(forms.ModelForm):
             'bar_code': forms.TextInput(attrs={'placeholder': 'Digite o código de barras do produto'}),
             'amount': forms.NumberInput(attrs={'min': '1'}),
             'low_stock_level': forms.NumberInput(attrs={'min': '1'}),
-            'unitary_price': forms.NumberInput(attrs={'min': '0'}),
+            'unitary_price': forms.NumberInput(attrs={'min': '0', 'step': '0.01'}),
         }
         labels = {
             'name': 'Nome',

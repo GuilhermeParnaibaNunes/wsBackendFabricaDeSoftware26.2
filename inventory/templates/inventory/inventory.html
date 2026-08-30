@@ -25,6 +25,9 @@
         
         /* BOTÕES */
         .btn { border: 1px solid #00ff00; padding: 8px 15px; display: inline-block; }
+
+        #search-btn { border-color: #00ffff; color: #00ffff; }
+        #search-btn:hover { background-color: #00ffff; color: #0c0c0c; }
     </style>
 </head>
 <body>
@@ -40,6 +43,7 @@
         </form>
         <div style="display: flex; gap: 15px; margin-bottom: 20px;">
             <a href="{% url 'register_product' %}" class="btn"> [ + ] CADASTRAR NOVO PRODUTO </a>
+            <a href="{% url 'search_api' %}" class="btn" id="search-btn"> [ ⬇ ] IMPORTAR VIA API </a>
         </div>
     </header>
 

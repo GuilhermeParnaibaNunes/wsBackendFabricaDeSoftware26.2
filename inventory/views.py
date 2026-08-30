@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm
 from .models import Product
+import requests
 
 @login_required
 def inventory(request):
@@ -22,7 +23,7 @@ def register_product(request):
             
             return redirect('inventory') 
     else:
-        form = ProductForm(initial=request.GET)
+        form = ProductForm(initial=request.GET.dict())
 
     return render(request, 'inventory/register.html', {'form': form})
 
@@ -54,3 +55,21 @@ def product_delete(request, sku):
         return redirect('inventory')
 
     return render(request, 'inventory/delete.html', {'product': product})
+
+@login_required
+def search_api(request):
+    query = request.GET.get('q')
+    results = []
+
+    if query:
+        url = f"https://dummyjson.com/products/search?q={query}"
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            json_data = response.json()
+            results = json_data.get('products', [])
+
+    return render(request, 'inventory/search_api.html', {
+        'results': results, 
+        'query': query
+    })
