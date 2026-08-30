@@ -60,6 +60,12 @@
                 [ ATENÇÃO ] ESTOQUE ABAIXO DO MÍNIMO ESTIPULADO ({{ product.low_stock_level }} UN)
             </div>
         {% endif %}
+        
+        {% if product.is_out_of_stock %}
+            <div class="alert-box">
+                [ PRODUTO ESGOTADO ]
+            </div>
+        {% endif %}
 
         <div class="campo"><span class="label">Nome:</span> <span class="valor">{{ product.name }}</span></div>
         <div class="campo"><span class="label">SKU:</span> <span class="valor">{{ product.sku }}</span></div>

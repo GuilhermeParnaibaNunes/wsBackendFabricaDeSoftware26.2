@@ -32,7 +32,11 @@ class Product(models.Model):
     
     @property
     def is_low_stock(self):
-        return self.amount <= self.low_stock_level
+        return self.amount < self.low_stock_level
+
+    @property
+    def is_out_of_stock(self):
+        return self.amount == 0
 
 class Sale(models.Model):
     # Foreign keys: every sale is relate 1 : 1 product/store (user)

@@ -71,9 +71,11 @@
                     
                     <!-- Lógica no HTML usando a property do model! -->
                     <td>
-                        {% if product.is_low_stock %}
+                        {% if product.is_out_of_stock %}
+                            <span class="alert">[ ESGOTADO ]</span>
+                        {% elif product.is_low_stock %}
                             <span class="alert">[ ESTOQUE BAIXO ]</span>
-                        {% else %}
+                        {% else %}    
                             <span>[ OK ]</span>
                         {% endif %}
                     </td>
