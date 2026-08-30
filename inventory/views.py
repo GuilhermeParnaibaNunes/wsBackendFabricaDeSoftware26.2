@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm
+from .forms import ProductForm, SaleForm
 from .models import Product
 import requests
 
@@ -99,3 +99,36 @@ def search_api(request):
         'query': query,
         'error_message': error_message
     })
+
+@login_required
+def sell_product(request):
+    if request.method == 'POST':
+        # Request.user is passed to filter form list 
+        form = SaleForm(request.POST, user=request.user)
+        
+        if form.is_valid():
+            sale = form.save(commit=False)
+            product = sale.product
+            
+            # Safety lock: prevents selling more than is in stock
+            if sale.quantity_sold > product.amount:
+                form.add_error('quantity_sold', f"> ERRO: Estoque insuficiente. Restam {product.amount} unidades.")
+            else:
+                # Calculates the sale total mathematically
+                sale.total_value = sale.quantity_sold * product.unitary_price
+                sale.store = request.user
+                
+                # Manages finances and inventory
+                product.amount -= sale.quantity_sold
+                request.user.balance += sale.total_value
+                
+                # Commits the three changes to the database
+                product.save()
+                request.user.save()
+                sale.save()
+                
+                return redirect('inventory')
+    else:
+        form = SaleForm(user=request.user)
+
+    return render(request, 'inventory/sell_product.html', {'form': form})

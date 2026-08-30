@@ -36,5 +36,8 @@ urlpatterns = [
     path('product/detail/<str:sku>/', inventory_views.product_detail, name='product_detail'),
     path('product/update/<str:sku>/', inventory_views.product_update, name='product_update'),
     path('product/delete/<str:sku>/', inventory_views.product_delete, name='product_delete'),
-    path('product/import/', inventory_views.search_api, name='search_api')
+    path('product/import/', inventory_views.search_api, name='search_api'),
+
+    # Sale route
+    path('product/sale/', inventory_views.sell_product, name='sell_product'),
 ]
