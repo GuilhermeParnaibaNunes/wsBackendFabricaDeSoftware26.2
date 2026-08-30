@@ -36,6 +36,10 @@
             <button type="submit" class="btn">> PESQUISAR</button>
         </form>
 
+        {% if error_message %}
+            <p style="color: #ff3333; margin-top: 20px; font-weight: bold;">{{ error_message }}</p>
+        {% endif %}
+
         {% if results %}
         <table>
             <thead>
@@ -52,11 +56,11 @@
                     <!-- A DummyJSON usa 'title' em vez de 'name', e 'price' para preço -->
                     <td>{{ p.title }}</td>
                     <td>{{ p.category }}</td>
-                    <td>{{ p.price }}</td>
+                    <td>{{ p.price_brl }}</td>
                     <td>
                         <!-- O TRUQUE DE MESTRE: Passando os dados para a URL de registro -->
                         <!-- Usamos os exatos mesmos nomes das chaves que estão no models.py -->
-                        <a href="{% url 'register_product' %}?name={{ p.title|urlencode }}&description={{ p.description|urlencode }}&category={{ p.category }}&sku={{ p.sku|default:'GERAR_NOVO' }}&bar_code={{ p.meta.barcode|default:'000000' }}&amount={{ p.stock }}&unitary_price={{ p.price|stringformat:'.2f' }}">
+                        <a href="{% url 'register_product' %}?name={{ p.title|urlencode }}&description={{ p.description|urlencode }}&category={{ p.category }}&sku={{ p.sku|default:'GERAR_NOVO' }}&bar_code={{ p.meta.barcode|default:'000000' }}&amount={{ p.stock }}&unitary_price={{ p.price_brl|stringformat:'.2f' }}">
                             > [ IMPORTAR ]
                         </a>
                     </td>

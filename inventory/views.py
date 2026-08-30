@@ -60,16 +60,42 @@ def product_delete(request, sku):
 def search_api(request):
     query = request.GET.get('q')
     results = []
+    error_message = None
 
     if query:
-        url = f"https://dummyjson.com/products/search?q={query}"
-        response = requests.get(url)
+        # Defensive Exchange Rate (1-second timeout)
+        exchange_rate = 5.50 # Fixed fallback in case of internet instability
+        try:
+            rate_response = requests.get("https://economia.awesomeapi.com.br/last/USD-BRL", timeout=1)
+            if rate_response.status_code == 200:
+                rate_data = rate_response.json()
+                exchange_rate = float(rate_data['USDBRL']['bid'])
+        except requests.exceptions.RequestException:
+            pass # Silent failure: swallows the error and uses the R$ 5.50 fallback
 
-        if response.status_code == 200:
-            json_data = response.json()
-            results = json_data.get('products', [])
+        # Global API Lookup (3-second timeout)
+        try:
+            url = f"https://dummyjson.com/products/search?q={query}"
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                json_data = response.json()
+                raw_results = json_data.get('products', [])
+
+                # Price conversion before injection into HTML
+                for p in raw_results:
+                    converted_price = float(p.get('price', 0)) * exchange_rate
+                    p['price_brl'] = round(converted_price, 2)
+                    results.append(p)
+            else:
+                error_message = "> ERRO_NO_SERVIDOR_GLOBAL: A base de dados recusou a conexão."
+
+        # Catches any internet outages or server timeouts
+        except:
+            error_message = "> FALHA_DE_SINAL: Impossível conectar à base global no momento."
 
     return render(request, 'inventory/search_api.html', {
         'results': results, 
-        'query': query
+        'query': query,
+        'error_message': error_message
     })
