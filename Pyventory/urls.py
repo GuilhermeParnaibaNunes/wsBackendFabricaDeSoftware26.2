@@ -34,9 +34,9 @@ urlpatterns = [
     # Inventory routes
     path('product/register/', inventory_views.register_product, name='register_product'),
     path('product/detail/<str:sku>/', inventory_views.product_detail, name='product_detail'),
-    path('product/update/<str:sku>/', inventory_views.product_update, name='product_update'),
-    path('product/delete/<str:sku>/', inventory_views.product_delete, name='product_delete'),
-    path('product/import/', inventory_views.search_api, name='search_api'),
+    path('product/update/<str:sku>/', inventory_views.update_product, name='update_product'),
+    path('product/delete/<str:sku>/', inventory_views.delete_product, name='delete_product'),
+    path('product/import/', inventory_views.import_product, name='import_product'),
 
     # Sale route
     path('product/sale/', inventory_views.sell_product, name='sell_product'),

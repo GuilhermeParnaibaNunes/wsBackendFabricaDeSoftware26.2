@@ -25,15 +25,15 @@ def register_product(request):
     else:
         form = ProductForm(initial=request.GET.dict())
 
-    return render(request, 'inventory/register.html', {'form': form})
+    return render(request, 'inventory/register_product.html', {'form': form})
 
 @login_required
 def product_detail(request, sku):
     product = get_object_or_404(Product, sku=sku, store=request.user)
-    return render(request, 'inventory/detail.html', {'product': product})
+    return render(request, 'inventory/product_detail.html', {'product': product})
 
 @login_required
-def product_update(request, sku):
+def update_product(request, sku):
     product = get_object_or_404(Product, sku=sku, store=request.user)
 
     if request.method == 'POST':
@@ -44,20 +44,20 @@ def product_update(request, sku):
     else:
         form = ProductForm(instance=product)
             
-    return render(request, 'inventory/update.html', {'form': form, 'product': product})
+    return render(request, 'inventory/update_product.html', {'form': form, 'product': product})
 
 @login_required
-def product_delete(request, sku):
+def delete_product(request, sku):
     product = get_object_or_404(Product, sku=sku, store=request.user)
 
     if request.method == 'POST':
         product.delete()
         return redirect('inventory')
 
-    return render(request, 'inventory/delete.html', {'product': product})
+    return render(request, 'inventory/delete_product.html', {'product': product})
 
 @login_required
-def search_api(request):
+def import_product(request):
     query = request.GET.get('q')
     results = []
     error_message = None
@@ -94,7 +94,7 @@ def search_api(request):
         except:
             error_message = "> FALHA_DE_SINAL: Impossível conectar à base global no momento."
 
-    return render(request, 'inventory/search_api.html', {
+    return render(request, 'inventory/import_product.html', {
         'results': results, 
         'query': query,
         'error_message': error_message
