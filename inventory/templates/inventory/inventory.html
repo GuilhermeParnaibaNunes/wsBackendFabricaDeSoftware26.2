@@ -31,7 +31,7 @@
 
     <header>
         <h1>> Pyventory_Inventory_System</h1>
-        <h1>> BEM_VINDO(A), {{ request.user.username }}!</h1>
+        <h2>> BEM_VINDO(A), {{ request.user.username }}!</h2>
         <p>> SALDO_ATUAL: R$ {{ request.user.balance }}</p>
     
         <form action="{% url 'logout' %}" method="post">
@@ -52,6 +52,7 @@
                     <th>Qtd</th>
                     <th>Preço (R$)</th>
                     <th>Status</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,6 +72,8 @@
                             <span>[ OK ]</span>
                         {% endif %}
                     </td>
+
+                    <td><a href="{% url 'product_detail' product.sku %}">> Ver Detalhes</a></td>
                 </tr>
                 
                 <!-- Caso a lista esteja vazia -->

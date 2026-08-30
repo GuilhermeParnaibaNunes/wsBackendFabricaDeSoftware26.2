@@ -25,3 +25,8 @@ def register_product(request):
         form = ProductForm(initial=request.GET)
 
     return render(request, 'inventory/register.html', {'form': form})
+
+@login_required
+def product_detail(request, sku):
+    product = get_object_or_404(Product, sku=sku, store=request.user)
+    return render(request, 'inventory/detail.html', {'product': product})

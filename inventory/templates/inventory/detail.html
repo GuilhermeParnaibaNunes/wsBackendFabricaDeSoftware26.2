@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyventory | Detalhes do Produto</title>
+    <style>
+        /* TEMA MATRIX/TERMINAL */
+        body {
+            background-color: #0c0c0c;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 { border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
+        a { color: #00ff00; text-decoration: none; font-weight: bold; }
+        a:hover { background-color: #00ff00; color: #0c0c0c; }
+        
+        .update-btn {border-color: #ffff00; color: #ffff00; text-align: center;}
+        .update-btn:hover {background-color: #ffff00; color: #0c0c0c;}
+
+        .delete-btn {border-color: #ff3333; color: #ff3333; text-align: center;}
+        .delete-btn:hover {background-color: #ff3333; color: #0c0c0c;}
+
+        /* LAYOUT DOS DETALHES */
+        .detalhes-container {
+            border: 1px solid #005500;
+            padding: 20px;
+            max-width: 800px;
+            margin-top: 20px;
+            background-color: #001100;
+        }
+        
+        .campo { margin-bottom: 15px; }
+        .label { font-weight: bold; color: #00cc00; display: inline-block; width: 180px; }
+        .valor { color: #00ff00; }
+        
+        /* ALERTA DE ESTOQUE BAIXO */
+        .alert-box { 
+            border: 1px solid #ff3333; 
+            color: #ff3333; 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            font-weight: bold; 
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>> LENDO_REGISTRO: [{{ product.sku }}]</h1>
+        <a href="{% url 'inventory' %}"> [ <- ] VOLTAR PARA A LISTA </a>
+    </header>
+
+    <main class="detalhes-container">
+        <!-- Reutilizando a sua lógica do Model para exibir um banner de alerta -->
+        {% if product.is_low_stock %}
+            <div class="alert-box">
+                [ ATENÇÃO ] ESTOQUE ABAIXO DO MÍNIMO ESTIPULADO ({{ product.low_stock_level }} UN)
+            </div>
+        {% endif %}
+
+        <div class="campo"><span class="label">Nome:</span> <span class="valor">{{ product.name }}</span></div>
+        <div class="campo"><span class="label">SKU:</span> <span class="valor">{{ product.sku }}</span></div>
+        
+        <!-- O |default é um filtro do Django que mostra um texto alternativo se a variável for vazia/nula -->
+        <div class="campo"><span class="label">Código de Barras:</span> <span class="valor">{{ product.bar_code|default:"N/A" }}</span></div>
+        
+        <div class="campo"><span class="label">Categoria:</span> <span class="valor">{{ product.category }}</span></div>
+        <div class="campo"><span class="label">Marca:</span> <span class="valor">{{ product.brand|default:"N/A" }}</span></div>
+        <div class="campo"><span class="label">Valor Unitário:</span> <span class="valor">R$ {{ product.unitary_price }}</span></div>
+        
+        <br>
+        <div class="campo"><span class="label">Estoque Atual:</span> <span class="valor">{{ product.amount }} unidades</span></div>
+        <div class="campo"><span class="label">Nível de Alerta:</span> <span class="valor">{{ product.low_stock_level }} unidades</span></div>
+        <br>
+        
+        <div class="campo">
+            <span class="label">Descrição:</span><br>
+            <span class="valor">{{ product.description|default:"Nenhuma descrição cadastrada." }}</span>
+        </div>
+        
+        <hr style="border-color: #005500; margin-top: 20px;">
+        <div class="campo" style="font-size: 0.8em; color: #00aa00;">
+            Cadastrado em: {{ product.created_at|date:"d/m/Y H:i" }} | Última alteração: {{ product.updated_at|date:"d/m/Y H:i" }}
+        </div>
+    </main>
+
+</body>
+</html>
