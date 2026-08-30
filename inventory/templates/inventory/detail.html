@@ -85,6 +85,10 @@
         <div class="campo" style="font-size: 0.8em; color: #00aa00;">
             Cadastrado em: {{ product.created_at|date:"d/m/Y H:i" }} | Última alteração: {{ product.updated_at|date:"d/m/Y H:i" }}
         </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 15px;">
+            <a href="{% url 'product_update' product.sku %}" class="update-btn"> EDITAR_REGISTRO</a>
+        </div>
     </main>
 
 </body>

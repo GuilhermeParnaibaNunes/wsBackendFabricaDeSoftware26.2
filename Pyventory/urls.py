@@ -34,4 +34,5 @@ urlpatterns = [
     # Inventory routes
     path('product/register/', inventory_views.register_product, name='register_product'),
     path('product/detail/<str:sku>/', inventory_views.product_detail, name='product_detail'),
+    path('product/update/<str:sku>/', inventory_views.product_update, name='product_update'),
 ]

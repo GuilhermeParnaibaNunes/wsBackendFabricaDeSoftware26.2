@@ -30,3 +30,17 @@ def register_product(request):
 def product_detail(request, sku):
     product = get_object_or_404(Product, sku=sku, store=request.user)
     return render(request, 'inventory/detail.html', {'product': product})
+
+@login_required
+def product_update(request, sku):
+    product = get_object_or_404(Product, sku=sku, store=request.user)
+
+    if request.method == 'POST':
+            form = ProductForm(request.POST, instance=product)
+            if form.is_valid():
+                form.save()
+                return redirect('product_detail', sku=product.sku)
+    else:
+        form = ProductForm(instance=product)
+            
+    return render(request, 'inventory/update.html', {'form': form, 'product': product})
